@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
     // Config
     [SerializeField] public float runSpeed = 5f;
     [SerializeField] public float jumpSpeed = 5f;
+    [SerializeField] public float climbSpeed = 5f;
 
     // State
     private bool isAlive = true;
@@ -16,6 +17,7 @@ public class Player : MonoBehaviour {
     private Rigidbody2D myRigidbody;
     private Animator myAnimator;
     private Collider2D myCollider2D;
+    private float gravityScaleAtStart;
 
     // Message then methods
     private void Start()
@@ -23,12 +25,14 @@ public class Player : MonoBehaviour {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
         myCollider2D = GetComponent<Collider2D>();
+        gravityScaleAtStart = myRigidbody.gravityScale;
     }
 
     // Update is called once per frame
     void Update ()
     {
         Run();
+        ClimbLadder();
         Jump();
         FlipSprite();
     }
@@ -41,15 +45,20 @@ public class Player : MonoBehaviour {
         myAnimator.SetBool("Running", PlayerHasHorizontalSpeed());
     }
 
-    private void ClimbLadders()
+    private void ClimbLadder()
     {
-        if (myRigidbody.IsTouchingLayers(LayerMask.GetMask("Ladders")))
+        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
-            float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
-            Vector2 playerVelocity = new Vector2(0f, controlThrow * runSpeed);
-            myRigidbody.velocity += playerVelocity;
-            myAnimator.SetBool("Climbing", PlayerHasVerticalSpeed());
+            myRigidbody.gravityScale = gravityScaleAtStart;
+            myAnimator.SetBool("Climbing", false);
+            return;
         }
+        myRigidbody.gravityScale = 0;
+        Debug.Log("Touching Ladder");
+        float controlThrow = CrossPlatformInputManager.GetAxis("Vertical");
+        Vector2 climbVelocity = new Vector2(myRigidbody.velocity.x, controlThrow * climbSpeed);
+        myRigidbody.velocity = climbVelocity;
+        myAnimator.SetBool("Climbing", PlayerHasVerticalSpeed());
     }
 
     private void Jump()
