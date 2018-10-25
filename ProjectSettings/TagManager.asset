@@ -13,8 +13,8 @@ TagManager:
   - UI
   - 
   - 
-  - PostProcessing
-  - 
+  - Ground
+  - Ladders
   - 
   - 
   - 
@@ -38,11 +38,17 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
   - name: Background
     uniqueID: 3385152889
     locked: 0
-  - name: Default
-    uniqueID: 0
+  - name: Ladders
+    uniqueID: 162516175
+    locked: 0
+  - name: Player
+    uniqueID: 323622775
     locked: 0
   - name: Foreground
     uniqueID: 4092884987
