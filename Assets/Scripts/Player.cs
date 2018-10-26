@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
     [SerializeField] public float runSpeed = 5f;
     [SerializeField] public float jumpSpeed = 5f;
     [SerializeField] public float climbSpeed = 5f;
+    [SerializeField] public Vector2 deathKick = new Vector2(0f, 5f);
 
     // State
     private bool isAlive = true;
@@ -16,7 +17,9 @@ public class Player : MonoBehaviour {
     // Cached component references
     private Rigidbody2D myRigidbody;
     private Animator myAnimator;
-    private Collider2D myCollider2D;
+    private CapsuleCollider2D myBodyCollider;
+    private BoxCollider2D myFeet;
+    SpriteRenderer spriteRenderer;
     private float gravityScaleAtStart;
 
     // Message then methods
@@ -24,17 +27,34 @@ public class Player : MonoBehaviour {
     {
         myRigidbody = GetComponent<Rigidbody2D>();
         myAnimator = GetComponent<Animator>();
-        myCollider2D = GetComponent<Collider2D>();
+        myBodyCollider = GetComponent<CapsuleCollider2D>();
+        myFeet = GetComponent<BoxCollider2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
         gravityScaleAtStart = myRigidbody.gravityScale;
     }
 
     // Update is called once per frame
     void Update ()
     {
+        if (!isAlive) { return; }
+
+        Die();
         Run();
         ClimbLadder();
         Jump();
         FlipSprite();
+    }
+
+    private void Die()
+    {
+        if (myBodyCollider.IsTouchingLayers(LayerMask.GetMask("Enemy", "Hazards")))
+        {
+            Debug.Log("Player Died");
+            myAnimator.SetTrigger("Die");
+            GetComponent<Rigidbody2D>().velocity = deathKick;
+            isAlive = false;
+        }
+
     }
 
     private void Run()
@@ -47,7 +67,7 @@ public class Player : MonoBehaviour {
 
     private void ClimbLadder()
     {
-        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Climbing")))
+        if (!myFeet.IsTouchingLayers(LayerMask.GetMask("Climbing")))
         {
             myRigidbody.gravityScale = gravityScaleAtStart;
             myAnimator.SetBool("Climbing", false);
@@ -63,7 +83,7 @@ public class Player : MonoBehaviour {
 
     private void Jump()
     {
-        if (!myCollider2D.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
+        if (!myFeet.IsTouchingLayers(LayerMask.GetMask("Ground"))) { return; }
 
         if (CrossPlatformInputManager.GetButtonDown("Jump"))
         {
