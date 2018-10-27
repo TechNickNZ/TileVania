@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour {
 
@@ -53,6 +54,7 @@ public class Player : MonoBehaviour {
             myAnimator.SetTrigger("Die");
             GetComponent<Rigidbody2D>().velocity = deathKick;
             isAlive = false;
+            FindObjectOfType<GameSession>().ProcessPlayerDeath();
         }
 
     }
