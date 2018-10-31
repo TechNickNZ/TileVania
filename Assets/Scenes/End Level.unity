@@ -791,7 +791,7 @@ GameObject:
   - component: {fileID: 682118307}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12498,6 +12498,7 @@ PolygonCollider2D:
       - {x: -24.911697, y: -21.4851}
       - {x: 8.092552, y: -21.466127}
       - {x: 7.98114, y: 5.0153885}
+<<<<<<< HEAD
 --- !u!1001 &826333306
 Prefab:
   m_ObjectHideFlags: 0
@@ -12555,6 +12556,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4438801177921492, guid: 2810f1cbe28f0374f93aea8c6cc34070,
     type: 2}
   m_PrefabInternal: {fileID: 826333306}
+=======
+>>>>>>> parent of d7dd647... added score and lives UI
 --- !u!1 &1016444523
 GameObject:
   m_ObjectHideFlags: 0
@@ -18184,7 +18187,7 @@ GameObject:
   - component: {fileID: 1985959887}
   m_Layer: 0
   m_Name: Cameras
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
