@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class ScenePersist : MonoBehaviour {
 
-    private int startingSceneIndex;
+    //private int startingSceneIndex;
 
     private void Awake()
     {
@@ -22,15 +22,20 @@ public class ScenePersist : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        startingSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //startingSceneIndex = SceneManager.GetActiveScene().buildIndex;
     }
 
     private void Update()
     {
-        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-        if(currentSceneIndex != startingSceneIndex)
-        {
-            Destroy(gameObject);
-        }
+        //int currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
+        //if(currentSceneIndex == startingSceneIndex)
+        //{
+        //    Destroy(gameObject);
+        //}
+    }
+
+    public void LevelComplete()
+    {
+        Destroy(gameObject);
     }
 }

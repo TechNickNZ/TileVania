@@ -23,6 +23,7 @@ public class LevelExit : MonoBehaviour {
 
     IEnumerator LoadlNextLevel()
     {
+        FindObjectOfType<ScenePersist>().LevelComplete();
         yield return new WaitForSecondsRealtime(LevelLoadDelay);
         EndLevel();
     }
