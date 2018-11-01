@@ -69,6 +69,7 @@ public class GameSession : MonoBehaviour {
 
     IEnumerator ResetGameSession()
     {
+        FindObjectOfType<ScenePersist>().ResetLevels();
         yield return new WaitForSecondsRealtime(RespawnTime);
         SceneManager.LoadScene(0);
         Destroy(gameObject);

@@ -34,7 +34,7 @@ public class ScenePersist : MonoBehaviour {
         //}
     }
 
-    public void LevelComplete()
+    public void ResetLevels()
     {
         Destroy(gameObject);
     }
